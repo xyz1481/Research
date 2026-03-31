@@ -1,0 +1,22 @@
+{
+  "route_enc": [
+    "Atlantic",
+    "Commodity",
+    "Intra-Asia",
+    "Pacific",
+    "Suez"
+  ],
+  "mode_enc": [
+    "Air",
+    "Sea"
+  ],
+  "category_enc": [
+    "Auto Parts",
+    "Consumer Electronics",
+    "Perishable Foods",
+    "Pharmaceuticals",
+    "Raw Materials",
+    "Semiconductors",
+    "Textiles"
+  ]
+}

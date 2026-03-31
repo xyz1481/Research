@@ -1,0 +1,82 @@
+{
+  "model": "MultimodalFusionModel (AttentionFusion + MLP)",
+  "embed_dim": 64,
+  "modalities": [
+    "Text (FinBERT)",
+    "Time (BiLSTM)",
+    "Graph (GCN+GAT)"
+  ],
+  "n_samples": 9950,
+  "train_val_split": "80/20 stratified",
+  "epochs": 40,
+  "optimizer": "Adam lr=0.001 wd=0.0001",
+  "scheduler": "CosineAnnealingLR",
+  "pos_weight": 8.803,
+  "best_val_f1": 0.229,
+  "best_val_auc": 0.5942,
+  "full_data_f1": 0.2385,
+  "full_data_auc": 0.6362,
+  "full_data_ap": 0.1596,
+  "attention_weights": {
+    "mean_attention": {
+      "Text (FinBERT)": 0.028,
+      "Time (BiLSTM)": 0.7536,
+      "Graph (GCN+GAT)": 0.2184
+    },
+    "attention_class_0": {
+      "Text (FinBERT)": 0.028,
+      "Time (BiLSTM)": 0.7525,
+      "Graph (GCN+GAT)": 0.2196
+    },
+    "attention_class_1": {
+      "Text (FinBERT)": 0.0287,
+      "Time (BiLSTM)": 0.7637,
+      "Graph (GCN+GAT)": 0.2077
+    },
+    "dominant_modality": "Time (BiLSTM)"
+  },
+  "ablation": [
+    {
+      "Model": "Text only",
+      "F1": 0.1914,
+      "AUC": 0.5306,
+      "Avg Precision": 0.1091
+    },
+    {
+      "Model": "Time only",
+      "F1": 0.2319,
+      "AUC": 0.5939,
+      "Avg Precision": 0.1412
+    },
+    {
+      "Model": "Graph only",
+      "F1": 0.1851,
+      "AUC": 0.5164,
+      "Avg Precision": 0.0945
+    },
+    {
+      "Model": "Text + Time",
+      "F1": 0.2304,
+      "AUC": 0.5964,
+      "Avg Precision": 0.1409
+    },
+    {
+      "Model": "Text + Graph",
+      "F1": 0.1826,
+      "AUC": 0.5247,
+      "Avg Precision": 0.1088
+    },
+    {
+      "Model": "Time + Graph",
+      "F1": 0.2309,
+      "AUC": 0.597,
+      "Avg Precision": 0.1328
+    },
+    {
+      "Model": "Full (all 3)",
+      "F1": 0.2333,
+      "AUC": 0.5989,
+      "Avg Precision": 0.1377
+    }
+  ]
+}

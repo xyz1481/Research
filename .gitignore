@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter
+.ipynb_checkpoints
+
+# Project specific
+.DS_Store
+*.log
+*.tmp
+*.bak
+
+# Large data (standard GitHub ignore for CSV/Excel/Large binary if too big)
+# merged_logistics_supply_chain (1).csv
+# (I am leaving others for reproducibility)
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini

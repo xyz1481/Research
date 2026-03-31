@@ -1,0 +1,12 @@
+city,in_degree,out_degree,betweenness,pagerank
+"Hamburg, DE",0.0,1.0,0.0,0.059444148
+"New York, US",1.0,0.0,0.0,0.109971896
+"Mumbai, IN",0.0,1.0,0.0,0.059444148
+"Felixstowe, UK",1.0,0.0,0.0,0.109971896
+"Santos, BR",0.0,1.0,0.0,0.059444148
+"Shanghai, CN",1.0,1.0,0.011111111,0.109971896
+"Los Angeles, US",1.0,0.0,0.0,0.15291978
+"Shenzhen, CN",0.0,1.0,0.0,0.059444148
+"Rotterdam, NL",1.0,0.0,0.0,0.109971896
+"Tokyo, JP",0.0,1.0,0.0,0.059444148
+"Singapore, SG",1.0,0.0,0.0,0.109971896

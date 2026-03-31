@@ -1,0 +1,21 @@
+{
+  "model": "ProsusAI/finbert",
+  "model_frozen": true,
+  "device": "cpu",
+  "total_rows": 10000,
+  "embedding_dim_raw": 768,
+  "embedding_dim_proj": 64,
+  "batch_size": 32,
+  "max_length_tokens": 128,
+  "finbert_loaded": true,
+  "cosine_sim_classes": 0.5817,
+  "projector_arch": "Linear(768,256)->ReLU->Dropout(0.2)->Linear(256,64)->LayerNorm",
+  "output_files": [
+    "text_embeddings_768.npy",
+    "text_features_64d.npy",
+    "text_projector_init.pt",
+    "df_phase3_with_text_features.parquet",
+    "synthetic_text_samples.csv",
+    "text_features_sample.csv"
+  ]
+}

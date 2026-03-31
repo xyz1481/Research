@@ -1,0 +1,45 @@
+{
+  "model": "GCN + GAT (2 layers)",
+  "in_dim": 11,
+  "hidden_dim": 64,
+  "gat_heads": 4,
+  "out_dim": 64,
+  "pooling": "mean + max concat",
+  "graph_nodes": 11,
+  "graph_edges": 6,
+  "node_features": [
+    "avg_delay",
+    "disruption_rate",
+    "total_shipments",
+    "avg_geo_risk",
+    "avg_weather",
+    "avg_cost_usd",
+    "avg_weight_kg",
+    "in_degree",
+    "out_degree",
+    "betweenness",
+    "pagerank"
+  ],
+  "pretraining_epochs": 200,
+  "final_node_accuracy": 1.0,
+  "final_loss": 0.0008,
+  "per_sample_emb_shape": [
+    9950,
+    64
+  ],
+  "device": "cpu",
+  "pyg_used": true,
+  "output_files": [
+    "gnn_encoder.pt",
+    "gnn_node_classifier.pt",
+    "graph_features_per_sample.npy",
+    "node_embeddings.npy",
+    "graph_emb_mean_max.npy",
+    "city_node_stats.csv",
+    "route_summary.csv",
+    "gnn_graph_viz.png",
+    "gnn_node_embedding_heatmap.png",
+    "gnn_pooling_ablation.png",
+    "gnn_pretraining_curve.png"
+  ]
+}

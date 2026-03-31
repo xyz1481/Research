@@ -1,0 +1,41 @@
+{
+  "strategies": [
+    "GradientExplainer modality-SHAP",
+    "TreeExplainer feature-SHAP (RF)",
+    "Attention weight analysis"
+  ],
+  "shap_available": true,
+  "n_explained": 500,
+  "n_background": 200,
+  "rf_baseline": {
+    "F1": 0.1994,
+    "AUC": 0.6132
+  },
+  "gbm_baseline": {
+    "F1": 0.019,
+    "AUC": 0.6108
+  },
+  "fusion_model": {
+    "F1": 0.229,
+    "AUC": 0.5937
+  },
+  "dominant_modality_attn": "Time (BiLSTM)",
+  "top3_features_rf": [
+    "route_enc",
+    "rolling_7d_avg_delay",
+    "Shipping_Cost_USD"
+  ],
+  "output_files": [
+    "shap_modality_importance_bar.png",
+    "shap_modality_by_class.png",
+    "shap_beeswarm_top30.png",
+    "shap_feature_importance_bar.png",
+    "shap_feature_beeswarm.png",
+    "shap_dependence_top3.png",
+    "attention_heatmap_by_bucket.png",
+    "attention_violin_by_class.png",
+    "roc_comparison.png",
+    "phase6_summary_figure.png",
+    "baseline_comparison.csv"
+  ]
+}

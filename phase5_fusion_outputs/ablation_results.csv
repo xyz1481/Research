@@ -1,0 +1,8 @@
+Model,F1,AUC,Avg Precision
+Text only,0.1914,0.5306,0.1091
+Time only,0.2319,0.5939,0.1412
+Graph only,0.1851,0.5164,0.0945
+Text + Time,0.2304,0.5964,0.1409
+Text + Graph,0.1826,0.5247,0.1088
+Time + Graph,0.2309,0.597,0.1328
+Full (all 3),0.2333,0.5989,0.1377

@@ -1,0 +1,53 @@
+{
+  "model": "Bidirectional LSTM",
+  "input_features": [
+    "delay",
+    "rolling_7d_avg_delay",
+    "days_since_last_disruption",
+    "Geopolitical_Risk_Index",
+    "Weather_Severity_Index",
+    "Inflation_Rate_Pct",
+    "Shipping_Cost_USD",
+    "Order_Weight_Kg",
+    "Scheduled_Lead_Time_Days",
+    "day_of_week",
+    "month",
+    "is_weekend",
+    "route_enc",
+    "mode_enc",
+    "category_enc"
+  ],
+  "n_features": 15,
+  "seq_len": 10,
+  "hidden_size": 128,
+  "num_layers": 2,
+  "dropout": 0.3,
+  "output_dim": 64,
+  "total_sequences": 9950,
+  "train_sequences": 7960,
+  "val_sequences": 1990,
+  "class_0_count": 8935,
+  "class_1_count": 1015,
+  "pos_weight": 8.803,
+  "best_val_loss": 1.2395,
+  "best_val_auc": 0.6098,
+  "epochs_trained": 25,
+  "device": "cpu",
+  "time_embed_shape": [
+    9950,
+    64
+  ],
+  "output_files": [
+    "time_features_64d.npy",
+    "lstm_encoder.pt",
+    "lstm_classifier.pt",
+    "X_seq.npy",
+    "y_seq.npy",
+    "seq_indices.npy",
+    "lstm_feature_scaler.pkl",
+    "label_encoders.json",
+    "acf_delay_seq_len_justification.png",
+    "lstm_training_curves.png",
+    "lstm_confusion_matrix.png"
+  ]
+}

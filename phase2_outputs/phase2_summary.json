@@ -1,0 +1,34 @@
+{
+  "total_rows": 10000,
+  "disruption_threshold_days": 2,
+  "class_distribution_original": {
+    "class_0": 8982,
+    "class_1": 1018
+  },
+  "class_distribution_resampled": {
+    "class_0": 8982,
+    "class_1": 8982
+  },
+  "class_weights_balanced": {
+    "0": 0.5567,
+    "1": 4.9116
+  },
+  "graph_nodes": 11,
+  "graph_edges": 6,
+  "graph_density": 0.054545,
+  "feature_count": 21,
+  "temporal_features": [
+    "day_of_week",
+    "month",
+    "quarter",
+    "week_of_year",
+    "year",
+    "is_weekend",
+    "covid_period",
+    "days_since_last_disruption",
+    "rolling_7d_avg_delay"
+  ],
+  "smote_applied": true,
+  "pyg_available": false,
+  "covid_window": "2020-01-01 -> 2022-12-31"
+}

@@ -1,0 +1,5 @@
+Dataset,Class,Label,Count,Percentage
+Original,0,No Disruption,8982,89.8
+Original,1,Disruption,1018,10.2
+After SMOTE,0,No Disruption,8982,50.0
+After SMOTE,1,Disruption,8982,50.0
