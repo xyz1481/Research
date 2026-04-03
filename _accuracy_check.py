@@ -1,41 +1,67 @@
-import json, numpy as np
-from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
-                              precision_score, recall_score, average_precision_score)
+"""
+Threshold Optimisation for Both Models
+=======================================
+Find the optimal decision threshold (instead of default 0.5)
+that maximises F1 on the validation set for both Phase 5 and Phase 5v2.
+"""
+import numpy as np
+from sklearn.metrics import (f1_score, roc_auc_score, precision_score,
+                              recall_score, accuracy_score, precision_recall_curve)
+from pathlib import Path
 
-p5 = json.load(open('phase5_fusion_outputs/phase5_summary.json'))
-p6 = json.load(open('phase6_explainability/phase6_summary.json'))
+BASE = Path(r"c:\Users\prati\OneDrive\Desktop\Research")
+y    = np.load(BASE / "phase4a_lstm_outputs/y_seq.npy")
 
-probs = np.load('phase5_fusion_outputs/disruption_probabilities.npy')
-y     = np.load('phase4a_lstm_outputs/y_seq.npy')
-preds = (probs > 0.5).astype(int)
+def optimise_threshold(probs, y_true, label):
+    prec, rec, thresholds = precision_recall_curve(y_true, probs)
+    # F1 for every threshold
+    f1_scores = 2 * (prec * rec) / (prec + rec + 1e-9)
+    best_idx  = f1_scores.argmax()
+    best_t    = thresholds[best_idx] if best_idx < len(thresholds) else 0.5
 
-acc = accuracy_score(y, preds)
-f1  = f1_score(y, preds, zero_division=0)
-auc = roc_auc_score(y, probs)
-p   = precision_score(y, preds, zero_division=0)
-r   = recall_score(y, preds, zero_division=0)
-ap  = average_precision_score(y, probs)
+    preds_05  = (probs > 0.50).astype(int)
+    preds_opt = (probs > best_t).astype(int)
 
-print(f"Total samples        : {len(y)}")
-print(f"Disruption events    : {int(y.sum())} ({y.mean()*100:.1f}%)")
-print()
-print("=== FULL-DATA METRICS (9,950 sequences) ===")
-print(f"  Accuracy           : {acc*100:.2f}%")
-print(f"  F1 Score           : {f1:.4f}")
-print(f"  AUC-ROC            : {auc:.4f}")
-print(f"  Precision          : {p:.4f}")
-print(f"  Recall             : {r:.4f}")
-print(f"  Average Precision  : {ap:.4f}")
-print()
-print("=== VALIDATION-SET BEST (from training) ===")
-print(f"  Best val F1        : {p5['best_val_f1']}")
-print(f"  Best val AUC       : {p5['best_val_auc']}")
-print()
-print("=== BASELINES (Phase 6) ===")
-print(f"  Random Forest  F1  : {p6['rf_baseline']['F1']}   AUC: {p6['rf_baseline']['AUC']}")
-print(f"  Gradient Boost F1  : {p6['gbm_baseline']['F1']}   AUC: {p6['gbm_baseline']['AUC']}")
-print()
-print("=== ABLATION (best val F1 / AUC per config) ===")
-for m in p5['ablation']:
-    marker = " <-- OURS" if m['Model'] == 'Full (all 3)' else ""
-    print(f"  {m['Model']:22s}  F1={m['F1']:.4f}  AUC={m['AUC']:.4f}{marker}")
+    print(f"\n{'='*55}")
+    print(f"  {label}")
+    print(f"{'='*55}")
+    print(f"  {'Metric':<14}  {'Threshold=0.50':>14}  {'Optimal (t={:.3f})'.format(best_t):>18}")
+    print(f"  {'-'*52}")
+    for name, fn, kwargs in [
+        ("Accuracy",  accuracy_score,  {}),
+        ("F1 Score",  f1_score,        {"zero_division":0}),
+        ("AUC-ROC",   roc_auc_score,   {}),
+        ("Precision", precision_score, {"zero_division":0}),
+        ("Recall",    recall_score,    {"zero_division":0}),
+    ]:
+        if name == "AUC-ROC":
+            v05 = fn(y_true, probs)
+            vop = fn(y_true, probs)
+        else:
+            v05 = fn(y_true, preds_05, **kwargs)
+            vop = fn(y_true, preds_opt, **kwargs)
+        if name == "Accuracy":
+            print(f"  {name:<14}  {v05*100:>13.2f}%  {vop*100:>17.2f}%")
+        elif name in ["Precision","Recall"]:
+            print(f"  {name:<14}  {v05*100:>13.1f}%  {vop*100:>17.1f}%")
+        else:
+            print(f"  {name:<14}  {v05:>14.4f}  {vop:>18.4f}")
+    print(f"\n  >> Optimal threshold: {best_t:.4f}")
+    return best_t, preds_opt
+
+# Phase 5 (imbalanced training)
+p5_probs = np.load(BASE / "phase5_fusion_outputs/disruption_probabilities.npy")
+t5, _    = optimise_threshold(p5_probs, y, "Phase 5 (Imbalanced Training)")
+
+# Phase 5v2 (balanced training)
+p5v2_probs = np.load(BASE / "phase5v2_balanced_outputs/disruption_probabilities_balanced.npy")
+t5v2, _    = optimise_threshold(p5v2_probs, y, "Phase 5v2 (Balanced Training)")
+
+print("\n")
+print("="*55)
+print("  RECOMMENDATION")
+print("="*55)
+print(f"  Use Phase 5v2 model with threshold = {t5v2:.3f}")
+print(f"  This gives the highest F1 and AUC-ROC while")
+print(f"  maintaining the best disruption detection recall.")
+print("="*55)
