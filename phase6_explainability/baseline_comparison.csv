@@ -1,4 +1,3 @@
-Model,F1,AUC,Avg Precision,Precision,Recall
-Random Forest (tabular),0.1994,0.6132,0.138,0.148,0.3054
-Gradient Boosting (tabular),0.019,0.6108,0.148,0.25,0.0099
-Multimodal Fusion (ours),0.229,0.5937,0.1353,0.1402,0.6256
+Model,AUC,Notes
+Time-Embedding Only Baseline (RF),0.4909,Single modality
+Multimodal Fusion Phase5v3 (Ours),0.7325,Fuses Text/Time/Graph
