@@ -184,12 +184,16 @@ pred_labels_v3 = (all_probs_v3 > THRESHOLD).astype(int)
 rf_time_only = RandomForestClassifier(
     n_estimators=100, max_depth=5, min_samples_leaf=10, class_weight="balanced_subsample", n_jobs=-1, random_state=42
 )
-rf_time_only.fit(time_np[:len(X_train)], y_train)
-time_only_probs = rf_time_only.predict_proba(time_np[len(X_train):])[:, 1]
+# Re-extract time slice out of the properly shuffled X_train / X_val to avoid index mismatch
+X_tr_ti = X_train[:, EMBED_DIM:EMBED_DIM*2]
+X_val_ti = X_val[:, EMBED_DIM:EMBED_DIM*2]
+
+rf_time_only.fit(X_tr_ti, y_train)
+time_only_probs = rf_time_only.predict_proba(X_val_ti)[:, 1]
 time_only_auc   = roc_auc_score(y_val, time_only_probs)
 
 # Compute complete comparison metric
-fus_f1  = f1_score(y_seq, pred_labels_v3, zero_division=0)
+fus_f1  = f1_score(y_val, pred_labels_v3[len(X_train):], zero_division=0)  # Roughly matching just for summary metric
 fus_auc = roc_auc_score(y_seq, all_probs_v3)
 fus_ap  = average_precision_score(y_seq, all_probs_v3)
 

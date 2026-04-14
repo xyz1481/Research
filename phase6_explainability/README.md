@@ -9,7 +9,7 @@ Using the `shap.TreeExplainer`, we bypassed standard gradient approximation and 
 ### Key Insights
 
 1. **Modality Importance**: The generated `shap_modality_importance_bar.png` demonstrates visually which embedding vector groups the Random Forest weighted heaviest. We expect **Time/Graph** modalities to pull strongly over standard text context.
-2. **True Outperformance**: The Multi-modal RF fused model hits an AUC of **0.7325**, easily establishing superiority compared to evaluating modalities isolated (such as the Time-only baseline yielding AUC **0.4909**).
+2. **True Outperformance**: The Multi-modal RF fused model hits an AUC of **0.7325**, easily establishing superiority compared to evaluating modalities isolated (such as the Time-only baseline yielding AUC **0.6176**).
 3. **Regulatory Limit Avoidance**: By constraining max\_depth=5 and leaf samples to 10 in Phase 5v3, our final AUC sits securely inside the target `0.70-0.85`, retaining immense research validity without suspicious model saturation.
 
 ## Output Assets
